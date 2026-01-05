@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Rocket, Menu, X, Search, User } from "lucide-react";
 import { Link } from "react-router";
+import { ModeToggle } from "./ModeToggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,6 +52,8 @@ const Navbar = () => {
                 <User size={16} />
                 <span>Sign In</span>
               </Link>
+
+              <ModeToggle />
             </div>
           </div>
 
