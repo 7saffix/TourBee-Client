@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Rocket } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +22,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
+import { config } from "@/config";
 
 const loginSchema = z.object({
   email: z.email(),
@@ -36,9 +40,21 @@ export function SigninForm() {
     },
   });
 
-  // 3. Define the submit handler
-  const onSubmit = (data: z.infer<typeof loginSchema>) => {
-    console.log("Form Data:", data);
+  const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
+
+  const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+    try {
+      const result = await login(data).unwrap();
+      console.log("login Data:", result);
+      if (result.success) {
+        toast.success(result.message);
+        navigate("/");
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.data?.errorSources[0].message);
+    }
   };
 
   return (
@@ -92,11 +108,24 @@ export function SigninForm() {
             />
 
             <div className="flex flex-col gap-3 pt-2">
-              <Button type="submit" className="w-full font-semibold">
-                Login
+              <Button
+                type="submit"
+                className="w-full font-semibold"
+                disabled={isLoading}
+              >
+                {isLoading ? "loading..." : "Login"}
               </Button>
 
-              <Button variant="outline" type="button" className="w-full">
+              <div className="relative flex items-center gap-4 py-2 text-xs font-medium uppercase text-muted-foreground before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border">
+                Or continue with
+              </div>
+
+              <Button
+                onClick={() => window.open(`${config.baseUrl}/auth/google`)}
+                variant="outline"
+                type="button"
+                className="w-full"
+              >
                 Login with Google
               </Button>
             </div>

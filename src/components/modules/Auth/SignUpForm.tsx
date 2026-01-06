@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Rocket } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +22,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
+import { config } from "@/config";
 
 const registerSchema = z
   .object({
@@ -47,13 +51,25 @@ export function SignupForm() {
     },
   });
 
-  // 3. Define the submit handler
-  const onSubmit = (data: z.infer<typeof registerSchema>) => {
-    console.log("Form Data:", data);
+  const navigate = useNavigate();
+  const [register, { isLoading }] = useRegisterMutation();
+
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    try {
+      const result = await register(data).unwrap();
+      console.log("Form Data:", result);
+      if (result.success) {
+        toast.success(result.message);
+      }
+      navigate("/signin");
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.data.errorSources[0].message);
+    }
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-lg border-border">
+    <Card className="w-full max-w-lg mx-auto shadow-lg border-border">
       <CardHeader className="space-y-1 text-center">
         <div className="flex justify-center mb-2">
           <div className="bg-primary p-2 rounded-lg">
@@ -132,10 +148,23 @@ export function SignupForm() {
             />
 
             <div className="flex flex-col gap-3 pt-2">
-              <Button type="submit" className="w-full font-semibold">
-                Create Account
+              <Button
+                type="submit"
+                className="w-full font-semibold"
+                disabled={isLoading}
+              >
+                {isLoading ? "loading..." : "Create Account"}
               </Button>
-              <Button variant="outline" type="button" className="w-full">
+              <div className="relative flex items-center gap-4 py-2 text-xs font-medium uppercase text-muted-foreground before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border">
+                Or continue with
+              </div>
+
+              <Button
+                onClick={() => window.open(`${config.baseUrl}/auth/google`)}
+                variant="outline"
+                type="button"
+                className="w-full"
+              >
                 Sign up with Google
               </Button>
             </div>
