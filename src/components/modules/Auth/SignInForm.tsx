@@ -46,7 +46,6 @@ export function SigninForm() {
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     try {
       const result = await login(data).unwrap();
-      console.log("login Data:", result);
       if (result.success) {
         toast.success(result.message);
         navigate("/");
