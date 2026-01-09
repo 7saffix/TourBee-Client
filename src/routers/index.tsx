@@ -8,7 +8,7 @@ import { createBrowserRouter, Navigate } from "react-router";
 import { AdminSidebarItems } from "./AdminSidebarItem";
 import { UserSidebarItems } from "./UserSidebarItem";
 import Unauth from "@/pages/Unauth";
-import { UserRole } from "@/contant/role";
+import { UserRole } from "@/constant/role";
 import type { IRole } from "@/types";
 import { withAuth } from "@/utils/withAuth";
 

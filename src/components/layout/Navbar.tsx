@@ -9,7 +9,7 @@ import {
 } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/redux/hook";
-import { UserRole } from "@/contant/role";
+import { UserRole } from "@/constant/role";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

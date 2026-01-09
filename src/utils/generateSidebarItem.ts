@@ -1,4 +1,4 @@
-import { UserRole } from "@/contant/role";
+import { UserRole } from "@/constant/role";
 import { AdminSidebarItems } from "@/routers/AdminSidebarItem";
 import { UserSidebarItems } from "@/routers/UserSidebarItem";
 import type { IRole } from "@/types";
