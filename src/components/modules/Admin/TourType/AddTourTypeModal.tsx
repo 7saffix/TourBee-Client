@@ -50,46 +50,44 @@ export default function AddTourTypeModel() {
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <form>
-        <DialogTrigger asChild>
-          <Button>Add Tour Type</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Add Tour Type</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <Form {...form}>
-              <form id="tour-type" onSubmit={form.handleSubmit(onsubmit)}>
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter tour type name"
-                          type="text"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </form>
-            </Form>
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button form="tour-type" type="submit">
-              Save
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </form>
+      <DialogTrigger asChild>
+        <Button>Add Tour Type</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add Tour Type</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-4">
+          <Form {...form}>
+            <form id="tour-type" onSubmit={form.handleSubmit(onsubmit)}>
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter tour type name"
+                        type="text"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </form>
+          </Form>
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DialogClose>
+          <Button form="tour-type" type="submit">
+            Save
+          </Button>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 }
