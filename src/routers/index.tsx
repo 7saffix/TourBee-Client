@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
       },
       {
         Component: TourDetails,
-        path: "/tours/:id",
+        path: "/tours/:slug",
       },
     ],
   },

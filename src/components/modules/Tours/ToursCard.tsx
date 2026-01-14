@@ -46,7 +46,7 @@ export function TourCard() {
               </div>
             </div>
             <Link
-              to={`/tours/${tour._id}`}
+              to={`/tours/${tour.slug}`}
               className="text-xs lg:text-sm font-bold text-primary hover:opacity-80 transition-opacity flex items-center gap-1"
             >
               Details <span className="text-lg">→</span>
