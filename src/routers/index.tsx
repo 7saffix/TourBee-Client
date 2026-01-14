@@ -13,6 +13,10 @@ import type { IRole } from "@/types";
 import { withAuth } from "@/utils/withAuth";
 import Tours from "@/pages/Tours";
 import TourDetails from "@/pages/TourDetails";
+import BookingPage from "@/pages/BookingPage";
+import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
+import PaymentFailPage from "@/pages/PaymentFailPage";
+import PaymentCancelPage from "@/pages/PaymentCancelPage";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +34,22 @@ export const router = createBrowserRouter([
       {
         Component: TourDetails,
         path: "/tours/:slug",
+      },
+      {
+        Component: withAuth(BookingPage),
+        path: "/tours/booking/:id",
+      },
+      {
+        Component: PaymentSuccessPage,
+        path: "/payment/success",
+      },
+      {
+        Component: PaymentFailPage,
+        path: "/payment/fail",
+      },
+      {
+        Component: PaymentCancelPage,
+        path: "/payment/cancel",
       },
     ],
   },

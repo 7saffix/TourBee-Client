@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useState } from "react";
 import {
   MapPin,
@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useGetAllTourQuery } from "@/redux/features/tour/tour.api";
 import { format } from "date-fns";
+import { useCreateBookingMutation } from "@/redux/features/booking/booking.api";
 
 // Icon Helper Function
 const getHighlightIcon = (
@@ -68,13 +69,36 @@ const getHighlightIcon = (
 const TourDetails = () => {
   const { slug } = useParams();
   const { data: tour, isLoading } = useGetAllTourQuery({ slug });
-
+  const [createBooking, { isLoading: bookLoading }] =
+    useCreateBookingMutation();
+  const navigate = useNavigate();
   // States
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [travelers, setTravelers] = useState(1);
 
   const currentTour = tour?.[0];
   const allImages = currentTour?.images || [];
+
+  const handleReserve = async () => {
+    const bookingData = {
+      tour: currentTour._id,
+      guestCount: travelers,
+    };
+
+    try {
+      const result = await createBooking(bookingData).unwrap();
+      console.log(result);
+      console.log(result?.data?.payment);
+      navigate(`/tours/booking/${currentTour._id}`, {
+        state: { guestCount: travelers, paymentUrl: result?.data?.payment },
+      });
+    } catch (error) {
+      if (error?.status == 403 && error?.data?.message == "no token received") {
+        navigate("/signin");
+      }
+      console.log(error);
+    }
+  };
 
   if (isLoading)
     return (
@@ -262,8 +286,16 @@ const TourDetails = () => {
               </div>
             </div>
 
-            <Button className="w-full py-8 text-xl font-black uppercase rounded-[1.5rem] shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform">
-              Reserve My Spot
+            <Button
+              disabled={bookLoading}
+              onClick={handleReserve}
+              className="w-full py-8 text-xl font-black uppercase rounded-[1.5rem] shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform"
+            >
+              {bookLoading ? (
+                <div className="h-6 w-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                "Reserve My Spot"
+              )}
             </Button>
 
             <div className="mt-8 flex flex-col gap-4">
