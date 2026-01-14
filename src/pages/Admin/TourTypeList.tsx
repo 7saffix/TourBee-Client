@@ -15,7 +15,7 @@ import { DeleteConfirmation } from "@/components/DeleteConfirmation";
 import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
 
-export default function TourType() {
+export default function TourTypeList() {
   const { data: tourTypeData } = useGetAllTourTypeQuery(undefined);
   const [deleteTourType] = useDeleteTourTypeMutation();
 

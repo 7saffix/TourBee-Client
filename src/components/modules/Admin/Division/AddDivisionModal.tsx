@@ -51,11 +51,10 @@ const AddDivisionModal = () => {
 
     try {
       const toastId = toast.loading("creating...");
-      const result = await createDivision(formData).unwrap();
+      await createDivision(formData).unwrap();
 
-      if (result.success) {
-        toast.success("division created successfully", { id: toastId });
-      }
+      toast.success("division created successfully", { id: toastId });
+
       setOpen(false);
     } catch (error) {
       console.log(error);

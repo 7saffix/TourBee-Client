@@ -1,6 +1,6 @@
 import AddDivisionModal from "@/components/modules/Admin/Division/AddDivisionModal";
 
-const Division = () => {
+const DivisionList = () => {
   return (
     <div className="w-full max-w-4xl mx-auto px-5">
       <div className="flex justify-between mb-5">
@@ -11,4 +11,4 @@ const Division = () => {
   );
 };
 
-export default Division;
+export default DivisionList;

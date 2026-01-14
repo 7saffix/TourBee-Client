@@ -29,6 +29,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "About", href: "/about", role: "public" },
+    { name: "Tours", href: "/tours", role: "public" },
     { name: "Dashboard", href: "/admin", role: UserRole.superAdmin },
     { name: "Dashboard", href: "/admin", role: UserRole.admin },
     { name: "Dashboard", href: "/user", role: UserRole.user },
@@ -127,7 +128,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="md:hidden border-b border-border bg-background animate-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden absolute top-16 left-0 w-full border-b border-border bg-background z-50 animate-in slide-in-from-top-2 duration-200 shadow-xl">
           <div className="space-y-1 px-4 pt-2 pb-6">
             {navLinks.map((link, index) => (
               <Fragment key={index}>
@@ -140,7 +141,7 @@ const Navbar = () => {
                     {link.name}
                   </Link>
                 )}
-                {link.role == user.role && (
+                {link.role == user?.role && (
                   <Link
                     to={link.href}
                     className="block py-3 text-base font-medium text-muted-foreground border-b border-border/50 hover:text-primary"

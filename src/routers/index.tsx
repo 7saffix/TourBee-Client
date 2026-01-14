@@ -11,6 +11,8 @@ import Unauth from "@/pages/Unauth";
 import { UserRole } from "@/constant/role";
 import type { IRole } from "@/types";
 import { withAuth } from "@/utils/withAuth";
+import Tours from "@/pages/Tours";
+import TourDetails from "@/pages/TourDetails";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ export const router = createBrowserRouter([
       {
         Component: AboutPage,
         path: "about",
+      },
+      {
+        Component: Tours,
+        path: "/tours",
+      },
+      {
+        Component: TourDetails,
+        path: "/tours/:id",
       },
     ],
   },
@@ -39,6 +49,7 @@ export const router = createBrowserRouter([
       ...generateRoute(UserSidebarItems),
     ],
   },
+
   {
     Component: Signup,
     path: "/signup",

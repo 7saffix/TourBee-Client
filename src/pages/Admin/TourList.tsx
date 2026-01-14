@@ -1,6 +1,6 @@
-import AddTourModal from "@/components/modules/Tour/AddTourModal";
+import AddTourModal from "@/components/modules/Admin/Tour/AddTourModal";
 
-const Tour = () => {
+const TourList = () => {
   return (
     <div className="w-full max-w-4xl mx-auto px-5">
       <div className="flex justify-between mb-5">
@@ -11,4 +11,4 @@ const Tour = () => {
   );
 };
 
-export default Tour;
+export default TourList;
